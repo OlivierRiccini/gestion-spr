@@ -81,7 +81,7 @@ export default function ServicesSection() {
     }
   };
 
-  // Subtle fade-in animation
+  // Subtle fade-in animation for section title
   const fadeInVariant = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
@@ -92,6 +92,40 @@ export default function ServicesSection() {
         ease: "easeOut"
       }
     }
+  };
+
+  // Animation for service cards
+  const cardVariants = {
+    hidden: { 
+      opacity: 0,
+      y: 50
+    },
+    visible: (custom: number) => ({ 
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        delay: 0.2 + (custom * 0.1),
+        ease: [0.25, 0.1, 0.25, 1.0]
+      }
+    })
+  };
+
+  // Animation for image reveal
+  const imageVariants = {
+    hidden: { 
+      scale: 1.2,
+      opacity: 0
+    },
+    visible: (custom: number) => ({
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        delay: 0.3 + (custom * 0.1),
+        ease: "easeOut"
+      }
+    })
   };
 
   return (
@@ -163,10 +197,10 @@ export default function ServicesSection() {
           return (
             <motion.div
               key={index}
-              variants={fadeInVariant}
+              custom={index}
+              variants={cardVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              transition={{ delay: index * 0.1 }}
               onMouseEnter={() => setHoveredService(index)}
               onMouseLeave={() => setHoveredService(null)}
             >
@@ -193,15 +227,23 @@ export default function ServicesSection() {
                         overflow: 'hidden',
                       }}
                     >
-                      <Image
-                        src={service.image}
-                        alt={service.title}
-                        fill
-                        style={{ 
-                          objectFit: 'cover',
-                          objectPosition: 'center',
-                        }}
-                      />
+                      <motion.div
+                        custom={index}
+                        variants={imageVariants}
+                        initial="hidden"
+                        animate={inView ? "visible" : "hidden"}
+                        style={{ height: '100%', width: '100%' }}
+                      >
+                        <Image
+                          src={service.image}
+                          alt={service.title}
+                          fill
+                          style={{ 
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                          }}
+                        />
+                      </motion.div>
                     </Box>
                   </Grid>
                   
@@ -292,23 +334,28 @@ export default function ServicesSection() {
                         </Typography>
                       </Box>
                       
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        startIcon={expandedService === index ? <RemoveIcon /> : <AddIcon />}
-                        onClick={() => toggleExpand(index)}
-                        sx={{ 
-                          mt: 2,
-                          borderColor: service.color,
-                          color: service.color,
-                          '&:hover': {
-                            borderColor: service.color,
-                            backgroundColor: `${service.color}10`,
-                          }
-                        }}
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.98 }}
                       >
-                        {expandedService === index ? 'Réduire' : 'En savoir plus'}
-                      </Button>
+                        <Button
+                          variant="outlined"
+                          size="small"
+                          startIcon={expandedService === index ? <RemoveIcon /> : <AddIcon />}
+                          onClick={() => toggleExpand(index)}
+                          sx={{ 
+                            mt: 2,
+                            borderColor: service.color,
+                            color: service.color,
+                            '&:hover': {
+                              borderColor: service.color,
+                              backgroundColor: `${service.color}10`,
+                            }
+                          }}
+                        >
+                          {expandedService === index ? 'Réduire' : 'En savoir plus'}
+                        </Button>
+                      </motion.div>
                     </Box>
                   </Grid>
                 </Grid>
