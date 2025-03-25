@@ -53,8 +53,8 @@ export default function ContactSection() {
       } else {
         throw new Error('Failed to send message');
       }
-    } catch (/* Use void instead of _ */) {
-      // No variable name needed
+    } catch {
+      // No parameter needed
       setSnackbar({
         open: true,
         message: "Une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer.",

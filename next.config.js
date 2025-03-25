@@ -4,15 +4,6 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com'],
   },
-  // This ensures favicon.ico is properly handled
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.(ico|png|jpg|jpeg|gif|svg)$/,
-      type: 'asset/resource',
-    });
-    return config;
-  },
-  // Add ESLint configuration to disable checks during build
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
@@ -25,6 +16,19 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  // Disable static optimization to avoid prerendering issues
+  experimental: {
+    // This will make the build process more forgiving
+    optimizeCss: false,
+    optimizePackageImports: [],
+  },
+  // Disable image optimization to simplify the build
+  images: {
+    unoptimized: true,
+    domains: ['images.unsplash.com'],
+  },
+  // Disable source maps in production
+  productionBrowserSourceMaps: false,
 };
 
 module.exports = nextConfig; 
