@@ -8,7 +8,6 @@ import {
   IconButton,
   Container,
   Button,
-  useMediaQuery,
   useTheme,
   Drawer,
   List,
@@ -34,7 +33,6 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('hero');
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
 
