@@ -53,7 +53,8 @@ export default function ContactSection() {
       } else {
         throw new Error('Failed to send message');
       }
-    } catch (error) {
+    } catch (_) {
+      // Using underscore to indicate intentionally unused parameter
       setSnackbar({
         open: true,
         message: "Une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer.",

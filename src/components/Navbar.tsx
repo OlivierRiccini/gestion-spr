@@ -1,29 +1,32 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import IconButton from '@mui/material/IconButton';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Container,
+  Button,
+  useMediaQuery,
+  useTheme,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Divider,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import CloseIcon from '@mui/icons-material/Close';
+import { useScroll, useMotionValueEvent } from 'framer-motion';
 import Image from 'next/image';
 
-const navItems = [
-  { label: 'Accueil', id: 'hero' },
-  { label: 'Services', id: 'services' },
-  { label: 'À propos', id: 'about' },
-  { label: 'Rendez-vous', id: 'appointment' },
-  { label: 'Contact', id: 'contact' },
+const pages = [
+  { name: 'Accueil', id: 'home' },
+  { name: 'Services', id: 'services' },
+  { name: 'À propos', id: 'about' },
+  { name: 'Contact', id: 'contact' },
 ];
 
 export default function Navbar() {
@@ -32,185 +35,264 @@ export default function Navbar() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 50,
-  });
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const wasScrolled = latest > 50;
+    if (wasScrolled !== isScrolled) {
+      setIsScrolled(wasScrolled);
+    }
+  });
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => document.getElementById(item.id));
-      const scrollPosition = window.scrollY + 100;
-
-      sections.forEach((section) => {
-        if (!section) return;
-        
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          setActiveSection(section.id);
+      const sections = pages.map(page => page.id);
+      
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section);
+            break;
+          }
         }
-      });
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
+  const handleOpenNavMenu = () => {
+    setMobileOpen(true);
+  };
+
+  const handleCloseNavMenu = () => {
     setMobileOpen(false);
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const offsetTop = section.offsetTop;
+  };
+
+  const handleNavClick = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offsetTop = element.offsetTop;
       window.scrollTo({
-        top: offsetTop - 80, // Adjust for navbar height
+        top: offsetTop - 80,
         behavior: 'smooth',
       });
+      setMobileOpen(false);
     }
   };
 
-  // Close drawer when screen size changes to desktop
-  useEffect(() => {
-    if (!isMobile && mobileOpen) {
-      setMobileOpen(false);
-    }
-  }, [isMobile, mobileOpen]);
-
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Box sx={{ my: 2 }}>
-        <Image 
-          src="/logo.png" 
-          alt="Stephanie Riccini Logo" 
-          width={180} 
-          height={60} 
-          style={{ objectFit: 'contain' }}
-        />
-      </Box>
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item.id} disablePadding>
-            <ListItemButton 
-              sx={{ 
-                textAlign: 'center',
-                backgroundColor: activeSection === item.id ? 'rgba(0, 0, 0, 0.04)' : 'transparent',
-              }}
-              onClick={() => scrollToSection(item.id)}
-            >
-              <ListItemText primary={item.label} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar 
-        position="fixed" 
-        color="default" 
-        elevation={trigger ? 4 : 0}
-        sx={{ 
-          backgroundColor: trigger ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
-          transition: 'background-color 0.3s ease',
-        }}
-      >
-        <Container maxWidth="lg">
-          <Toolbar>
-            <Box
+    <AppBar 
+      position="fixed" 
+      sx={{ 
+        backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
+        boxShadow: isScrolled ? '0 4px 20px rgba(0, 0, 0, 0.05)' : 'none',
+        transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
+        backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+      }}
+      elevation={0}
+    >
+      <Container maxWidth="xl">
+        <Toolbar disableGutters sx={{ height: { xs: 70, md: 80 } }}>
+          {/* Mobile menu icon */}
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
+            <IconButton
+              size="large"
+              aria-label="menu"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+              sx={{ color: theme.palette.text.primary, p: 0 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
+
+          {/* Logo - Mobile */}
+          <Box 
+            sx={{ 
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              justifyContent: 'center',
+              ml: -4, // Reduce left margin to center the logo better
+            }}
+          >
+            <Box 
+              sx={{ 
+                position: 'relative',
+                width: 180,
+                height: 50,
+                cursor: 'pointer',
+              }}
+              onClick={() => handleNavClick('home')}
+            >
+              <Image
+                src="/logo.png"
+                alt="Stéphanie Riccini Logo"
+                fill
+                style={{ objectFit: 'contain' }}
+                priority
+              />
+            </Box>
+          </Box>
+
+          {/* Logo - Desktop */}
+          <Box 
+            sx={{ 
+              display: { xs: 'none', md: 'flex' },
+              mr: 4,
+              cursor: 'pointer',
+            }}
+            onClick={() => handleNavClick('home')}
+          >
+            <Box sx={{ position: 'relative', width: 80, height: 55 }}>
+              <Image
+                src="/logo.png"
+                alt="Stéphanie Riccini Logo"
+                fill
+                style={{ objectFit: 'contain' }}
+                priority
+              />
+            </Box>
+          </Box>
+
+          {/* Desktop navigation */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
+            {pages.map((page) => (
+              <Button
+                key={page.id}
+                onClick={() => handleNavClick(page.id)}
+                sx={{
+                  my: 2,
+                  mx: 1.5,
+                  color: theme.palette.text.primary,
+                  display: 'block',
+                  fontSize: '0.95rem',
+                  position: 'relative',
+                  fontWeight: activeSection === page.id ? 600 : 400,
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    width: activeSection === page.id ? '100%' : hoveredItem === page.id ? '100%' : '0%',
+                    height: '2px',
+                    bottom: '10px',
+                    left: 0,
+                    backgroundColor: theme.palette.primary.main,
+                    transition: 'width 0.3s ease',
+                  },
+                  '&:hover::after': {
+                    width: '100%',
+                  },
+                }}
+                onMouseEnter={() => setHoveredItem(page.id)}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                {page.name}
+              </Button>
+            ))}
+          </Box>
+
+          {/* CTA Button - Desktop */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Button
+              variant="contained"
+              onClick={() => handleNavClick('appointment')}
               sx={{
-                flexGrow: 1,
-                display: 'flex',
-                alignItems: 'center',
+                backgroundColor: theme.palette.primary.main,
+                color: '#ffffff',
+                px: 3,
+                py: 1,
+                '&:hover': {
+                  backgroundColor: theme.palette.primary.dark,
+                },
               }}
             >
-              <Box 
-                sx={{ 
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-                onClick={() => scrollToSection('hero')}
+              Prendre RDV
+            </Button>
+          </Box>
+
+          {/* Mobile Drawer */}
+          <Drawer
+            anchor="left"
+            open={mobileOpen}
+            onClose={handleCloseNavMenu}
+            sx={{
+              '& .MuiDrawer-paper': { 
+                width: '100%', 
+                backgroundColor: theme.palette.background.default,
+                boxSizing: 'border-box',
+                pt: 2,
+              },
+            }}
+          >
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', px: 2 }}>
+              <IconButton
+                onClick={handleCloseNavMenu}
+                sx={{ color: theme.palette.text.primary }}
               >
-                <Image 
-                  src="/logo.png" 
-                  alt="Stephanie Riccini Logo" 
-                  width={180} 
-                  height={60} 
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+              <Box sx={{ position: 'relative', width: 200, height: 55 }}>
+                <Image
+                  src="/logo.png"
+                  alt="Stéphanie Riccini Logo"
+                  fill
                   style={{ objectFit: 'contain' }}
                 />
               </Box>
             </Box>
-            
-            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-              {navItems.map((item) => (
-                <Button 
-                  key={item.id}
-                  onMouseEnter={() => setHoveredItem(item.id)}
-                  onMouseLeave={() => setHoveredItem(null)}
-                  onClick={() => scrollToSection(item.id)}
-                  sx={{ 
-                    color: 'text.primary',
-                    mx: 1,
-                    position: 'relative',
+            <Divider sx={{ mb: 4 }} />
+            <List sx={{ px: 4 }}>
+              {pages.map((page) => (
+                <ListItem key={page.id} disablePadding>
+                  <ListItemButton
+                    onClick={() => handleNavClick(page.id)}
+                    sx={{
+                      py: 2,
+                      borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
+                      fontWeight: activeSection === page.id ? 600 : 400,
+                    }}
+                  >
+                    <ListItemText 
+                      primary={page.name} 
+                      sx={{ 
+                        '& .MuiTypography-root': { 
+                          fontSize: '1.2rem',
+                          color: theme.palette.text.primary,
+                        } 
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+              <ListItem disablePadding sx={{ mt: 4 }}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={() => handleNavClick('appointment')}
+                  sx={{
+                    backgroundColor: theme.palette.primary.main,
+                    color: '#ffffff',
+                    py: 1.5,
                     '&:hover': {
-                      backgroundColor: 'transparent',
+                      backgroundColor: theme.palette.primary.dark,
                     },
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      bottom: 6,
-                      left: 8,
-                      width: (activeSection === item.id || hoveredItem === item.id) ? 'calc(100% - 16px)' : '0%',
-                      height: '2px',
-                      backgroundColor: theme.palette.primary.main,
-                      transition: 'width 0.3s ease',
-                    }
                   }}
                 >
-                  {item.label}
+                  Prendre Rendez-vous
                 </Button>
-              ))}
-            </Box>
-            
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="end"
-              onClick={handleDrawerToggle}
-              sx={{ display: { md: 'none' } }}
-            >
-              <MenuIcon />
-            </IconButton>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      
-      <Box component="nav">
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-      
-      <Toolbar /> {/* Empty toolbar to push content below app bar */}
-    </Box>
+              </ListItem>
+            </List>
+          </Drawer>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 } 
