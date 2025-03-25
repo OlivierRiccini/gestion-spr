@@ -1,11 +1,11 @@
 export const defaultMetadata = {
-  title: 'Lexchain AI - AI-Powered Dispute Resolution Platform',
-  description: 'Revolutionize dispute resolution with AI and blockchain technology. Save time, cut costs, and gain transparency with our innovative platform.',
-  keywords: 'AI dispute resolution, blockchain arbitration, legal tech, smart contracts, automated resolution',
-  authors: [{ name: 'Lexchain AI' }],
-  creator: 'Lexchain AI',
-  publisher: 'Lexchain AI',
-  metadataBase: new URL('https://lexchain.ai'),
+  title: 'Stéphanie Riccini | Conseil en Gestion de Patrimoine',
+  description: 'Conseils personnalisés en gestion de patrimoine pour sécuriser votre avenir financier et réaliser vos projets. Optimisation fiscale, préparation retraite et transmission de patrimoine.',
+  keywords: 'gestion de patrimoine, conseil financier, optimisation fiscale, préparation retraite, transmission patrimoine, protection conjoint, bilan patrimonial',
+  authors: [{ name: 'Stéphanie Riccini' }],
+  creator: 'Stéphanie Riccini',
+  publisher: 'Stéphanie Riccini',
+  metadataBase: new URL('https://stephanie-riccini.fr'),
   icons: {
     icon: [
       { rel: 'icon', url: '/favicon.ico' },

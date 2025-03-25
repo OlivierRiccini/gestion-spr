@@ -51,6 +51,7 @@ export default function HeroSection() {
     <Box
       id="home"
       component="section"
+      aria-label="Introduction à la gestion de patrimoine"
       sx={{
         height: '100vh',
         display: 'flex',
@@ -95,13 +96,14 @@ export default function HeroSection() {
             >
               <Typography
                 variant="h1"
-                component="div"
+                component="span"
                 sx={{
                   fontWeight: 500,
                   fontSize: { xs: '2.5rem', md: '3.5rem' },
                   lineHeight: 1.2,
                   color: theme.palette.text.primary,
                   mb: 3,
+                  display: 'block',
                 }}
               >
                 préparez demain.
@@ -150,6 +152,7 @@ export default function HeroSection() {
                   });
                 }
               }}
+              aria-label="Prendre rendez-vous pour une consultation en gestion de patrimoine"
               sx={{
                 py: 1.5,
                 px: 4,

@@ -19,6 +19,7 @@ const services = [
 Notre objectif : vous aider à prendre les meilleures décisions pour protéger, valoriser et transmettre votre patrimoine en toute sérénité.`,
     image: '/image-1.png',
     color: '#d6ccc2',
+    alt: 'Bilan patrimonial personnalisé'
   },
   {
     title: 'Optimisation Fiscale',
@@ -29,6 +30,7 @@ Notre objectif : vous aider à prendre les meilleures décisions pour protéger,
 Notre rôle : vous accompagner pour mieux comprendre votre fiscalité, identifier les leviers d'optimisation et mettre en place des solutions adaptées à votre situation.`,
     image: '/image-2.png',
     color: '#c8b7a6',
+    alt: 'Stratégies d\'optimisation fiscale légale'
   },
   {
     title: 'Préparation de la Retraite',
@@ -39,6 +41,7 @@ Notre rôle : vous accompagner pour mieux comprendre votre fiscalité, identifie
 Notre mission : vous aider à construire une stratégie de retraite sur-mesure, en tenant compte de votre situation personnelle, professionnelle et patrimoniale.`,
     image: '/image-3.png',
     color: '#baa898',
+    alt: 'Préparation personnalisée pour la retraite'
   },
   {
     title: 'Transmission Anticipée',
@@ -49,6 +52,7 @@ Notre mission : vous aider à construire une stratégie de retraite sur-mesure, 
 Que ce soit dans un cadre familial ou professionnel, il est essentiel d'établir une stratégie réfléchie, adaptée à vos objectifs, à votre situation patrimoniale et à la fiscalité en vigueur.`,
     image: '/image-4.png',
     color: '#a39990',
+    alt: 'Stratégies de transmission anticipée de patrimoine'
   },
   {
     title: 'Protection du Conjoint',
@@ -59,6 +63,7 @@ Que ce soit dans un cadre familial ou professionnel, il est essentiel d'établir
 Chez Gestion SPR, nous vous aidons à mettre en place des solutions efficaces et personnalisées pour assurer la tranquillité de votre conjoint.`,
     image: '/image-5.png',
     color: '#8c7b70',
+    alt: 'Solutions de protection pour le conjoint survivant'
   },
 ];
 
@@ -132,6 +137,7 @@ export default function ServicesSection() {
     <Box
       id="services"
       component="section"
+      aria-labelledby="services-heading"
       sx={{
         py: 12,
         backgroundColor: '#ffffff',
@@ -154,6 +160,7 @@ export default function ServicesSection() {
           transform: 'translate(30%, -30%)',
           pointerEvents: 'none',
         }}
+        aria-hidden="true"
       />
       
       <Container maxWidth="lg">
@@ -163,6 +170,7 @@ export default function ServicesSection() {
           animate={inView ? "visible" : "hidden"}
         >
           <Typography
+            id="services-heading"
             variant="h2"
             component="h2"
             sx={{
@@ -193,6 +201,7 @@ export default function ServicesSection() {
 
         {services.map((service, index) => {
           const isEven = index % 2 === 0;
+          const serviceId = `service-${service.title.toLowerCase().replace(/\s+/g, '-')}`;
           
           return (
             <motion.div
@@ -213,6 +222,8 @@ export default function ServicesSection() {
                   backgroundColor: '#ffffff',
                   transition: 'box-shadow 0.3s ease',
                 }}
+                component="article"
+                aria-labelledby={serviceId}
               >
                 <Grid 
                   container 
@@ -236,8 +247,10 @@ export default function ServicesSection() {
                       >
                         <Image
                           src={service.image}
-                          alt={service.title}
+                          alt={service.alt || service.title}
                           fill
+                          priority={index < 2} // Prioritize loading first two images
+                          sizes="(max-width: 768px) 100vw, 40vw"
                           style={{ 
                             objectFit: 'cover',
                             objectPosition: 'center',
@@ -260,6 +273,7 @@ export default function ServicesSection() {
                         <Typography
                           variant="h4"
                           component="h3"
+                          id={serviceId}
                           sx={{
                             fontWeight: 500,
                             color: theme.palette.text.primary,
@@ -319,6 +333,7 @@ export default function ServicesSection() {
                           opacity: expandedService === index ? 1 : 0,
                           mb: expandedService === index ? 3 : 0,
                         }}
+                        aria-hidden={expandedService !== index}
                       >
                         <Divider sx={{ my: 3, borderColor: `${service.color}50` }} />
                         
@@ -343,6 +358,8 @@ export default function ServicesSection() {
                           size="small"
                           startIcon={expandedService === index ? <RemoveIcon /> : <AddIcon />}
                           onClick={() => toggleExpand(index)}
+                          aria-expanded={expandedService === index}
+                          aria-controls={`${serviceId}-details`}
                           sx={{ 
                             mt: 2,
                             borderColor: service.color,
@@ -379,6 +396,7 @@ export default function ServicesSection() {
           transform: 'translate(-30%, 30%)',
           pointerEvents: 'none',
         }}
+        aria-hidden="true"
       />
     </Box>
   );

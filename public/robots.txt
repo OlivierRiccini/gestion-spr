@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lexchain.ai/sitemap.xml 
+# Host
+Host: https://www.stephanie-riccini.fr
+
+# Sitemaps
+Sitemap: https://www.stephanie-riccini.fr/sitemap.xml 
