@@ -13,6 +13,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 type FormData = {
   name: string;
   email: string;
+  phone?: string; // Optional phone number
   message: string;
 };
 
@@ -35,7 +36,7 @@ export default function ContactSection() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('/api/send-email', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -172,7 +173,7 @@ export default function ContactSection() {
                 <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
                   <EmailIcon sx={{ mr: 2, color: theme.palette.primary.main }} />
                   <Typography variant="body1">
-                    riccini.stephanie@gestionspr.com
+                    sriccini@gestionspr.com
                   </Typography>
                 </Box>
                 
@@ -248,6 +249,31 @@ export default function ContactSection() {
                               variant="outlined"
                               error={!!errors.email}
                               helperText={errors.email?.message}
+                              disabled={isSubmitting}
+                            />
+                          )}
+                        />
+                      </Grid>
+                      
+                      <Grid item xs={12}>
+                        <Controller
+                          name="phone"
+                          control={control}
+                          defaultValue=""
+                          rules={{ 
+                            pattern: {
+                              value: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i,
+                              message: 'Numéro de téléphone invalide'
+                            }
+                          }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              label="Téléphone (optionnel)"
+                              fullWidth
+                              variant="outlined"
+                              error={!!errors.phone}
+                              helperText={errors.phone?.message}
                               disabled={isSubmitting}
                             />
                           )}

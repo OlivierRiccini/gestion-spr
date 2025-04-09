@@ -1,66 +1,76 @@
-import * as React from 'react';
 import {
-  Html,
   Body,
   Container,
   Head,
   Heading,
   Hr,
-  Img,
-  Link,
+  Html,
   Preview,
   Section,
   Text,
 } from '@react-email/components';
-import baseStyles from './BaseEmailTemplate';
-import { EMAIL_ASSETS } from './constants';
+import { Tailwind } from '@react-email/tailwind';
 
 interface ContactTemplateProps {
   name: string;
   email: string;
+  phone?: string; // Optional phone number
   message: string;
 }
 
-export default function ContactTemplate({ name, email, message }: ContactTemplateProps) {
+export const ContactTemplate = ({
+  name,
+  email,
+  phone,
+  message,
+}: ContactTemplateProps) => {
   return (
     <Html>
       <Head />
-      <Preview>New Contact Form Submission from {name}</Preview>
-      <Body style={baseStyles.body}>
-        <Container style={baseStyles.container}>
-          <Img
-            src={EMAIL_ASSETS.LOGO_URL}
-            height="40"
-            alt="Lexchain AI"
-            style={{ marginBottom: '24px' }}
-          />
-          <Section style={baseStyles.section}>
-            <Heading style={baseStyles.heading}>
-              New Contact Form Submission
+      <Preview>Nouveau message de {name} via le formulaire de contact</Preview>
+      <Tailwind>
+        <Body className="bg-white my-auto mx-auto font-sans">
+          <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[600px]">
+            <Heading className="text-[#a39990] text-[24px] font-normal text-center p-0 my-[30px] mx-0">
+              Stéphanie Riccini | Gestion de Patrimoine
             </Heading>
-            <Text style={baseStyles.text}>
-              <strong>Name:</strong> {name}
+            <Text className="text-[#666666] text-[14px] leading-[24px]">
+              Bonjour Stéphanie,
             </Text>
-            <Text style={baseStyles.text}>
-              <strong>Email:</strong> {email}
+            <Text className="text-[#666666] text-[14px] leading-[24px]">
+              Vous avez reçu un nouveau message de <strong>{name}</strong> via le formulaire de contact de votre site web.
             </Text>
-            <Hr style={{ margin: '24px 0', border: '1px solid rgba(255, 255, 255, 0.1)' }} />
-            <Text style={baseStyles.text}>
-              <strong>Message:</strong><br />
-              {message}
+            <Section className="bg-[#f9f9f9] border border-solid border-[#eaeaea] rounded p-[20px] my-[16px]">
+              <Text className="text-[#666666] text-[14px] leading-[24px] m-0 mb-[10px]">
+                <strong>Nom:</strong> {name}
+              </Text>
+              <Text className="text-[#666666] text-[14px] leading-[24px] m-0 mb-[10px]">
+                <strong>Email:</strong> {email}
+              </Text>
+              {phone && (
+                <Text className="text-[#666666] text-[14px] leading-[24px] m-0 mb-[10px]">
+                  <strong>Téléphone:</strong> {phone}
+                </Text>
+              )}
+              <Text className="text-[#666666] text-[14px] leading-[24px] m-0">
+                <strong>Message:</strong>
+              </Text>
+              <Text className="text-[#666666] text-[14px] leading-[24px] m-0 whitespace-pre-line">
+                {message}
+              </Text>
+            </Section>
+            <Text className="text-[#666666] text-[14px] leading-[24px]">
+              Vous pouvez répondre directement à cet email pour contacter {name}.
             </Text>
-            <Link
-              href={`mailto:${email}`}
-              style={baseStyles.button}
-            >
-              Reply to {name}
-            </Link>
-            <Text style={baseStyles.footer}>
-              This message was sent from the contact form on lexchain.ai
+            <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
+            <Text className="text-[#666666] text-[12px] leading-[24px] text-center">
+              © {new Date().getFullYear()} Stéphanie Riccini | Conseil en Gestion de Patrimoine
             </Text>
-          </Section>
-        </Container>
-      </Body>
+          </Container>
+        </Body>
+      </Tailwind>
     </Html>
   );
-} 
+};
+
+export default ContactTemplate; 

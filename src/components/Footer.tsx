@@ -47,7 +47,7 @@ export default function Footer() {
               Contact
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              Email: riccini.stephanie@gestionspr.com
+              Email: sriccini@gestionspr.com
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
               Téléphone: +33 6 13 08 92 73
