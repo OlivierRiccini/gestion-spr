@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import ContactTemplate from '@/components/emails/ContactTemplate';
-import ContactConfirmationTemplate from '@/components/emails/ContactConfirmationTemplate';
+import ConfirmationTemplate from '@/components/emails/ConfirmationTemplate';
 import { render } from '@react-email/render';
 
 // Initialize Resend with your API key
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
       from: 'Stéphanie Riccini <sriccini@gestionspr.com>', // Update with your verified domain
       to: email,
       subject: 'Merci pour votre message',
-      html: await render(ContactConfirmationTemplate({ name })),
+      html: await render(ConfirmationTemplate({ name })),
     });
 
     return NextResponse.json({

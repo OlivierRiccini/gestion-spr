@@ -2,6 +2,7 @@
 
 import { Box, Container, Typography, Link, Divider, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import NextLink from 'next/link';
 
 export default function Footer() {
   const theme = useTheme();
@@ -75,14 +76,15 @@ export default function Footer() {
             >
               Mentions légales
             </Link>
-            <Link
-              href="#"
-              color="inherit"
-              underline="hover"
-              sx={{ display: 'block', mb: 1 }}
-            >
-              Politique de confidentialité
-            </Link>
+            <NextLink href="/politique-de-confidentialite" passHref>
+              <Link
+                color="inherit"
+                underline="hover"
+                sx={{ display: 'block', mb: 1 }}
+              >
+                Politique de confidentialité
+              </Link>
+            </NextLink>
             <Link
               href="#contact"
               color="inherit"
