@@ -20,6 +20,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { useScroll, useMotionValueEvent } from 'framer-motion';
 import Image from 'next/image';
+import { useRouter, usePathname } from 'next/navigation';
 
 const pages = [
   { name: 'Accueil', id: 'home' },
@@ -35,6 +36,10 @@ export default function Navbar() {
   const theme = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
+  const router = useRouter();
+  const pathname = usePathname();
+  
+  const isHomePage = pathname === '/';
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const wasScrolled = latest > 50;
@@ -44,6 +49,8 @@ export default function Navbar() {
   });
 
   useEffect(() => {
+    if (!isHomePage) return;
+    
     const handleScroll = () => {
       const sections = pages.map(page => page.id);
       
@@ -61,7 +68,7 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHomePage]);
 
   const handleOpenNavMenu = () => {
     setMobileOpen(true);
@@ -72,6 +79,11 @@ export default function Navbar() {
   };
 
   const handleNavClick = (id: string) => {
+    if (!isHomePage) {
+      router.push(`/#${id}`);
+      return;
+    }
+    
     const element = document.getElementById(id);
     if (element) {
       const offsetTop = element.offsetTop;
@@ -81,6 +93,15 @@ export default function Navbar() {
       });
       setMobileOpen(false);
     }
+  };
+
+  const handleLogoClick = () => {
+    if (!isHomePage) {
+      router.push('/');
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    setMobileOpen(false);
   };
 
   return (
@@ -127,7 +148,7 @@ export default function Navbar() {
                 height: 50,
                 cursor: 'pointer',
               }}
-              onClick={() => handleNavClick('home')}
+              onClick={handleLogoClick}
             >
               <Image
                 src="/logo.png"
@@ -146,7 +167,7 @@ export default function Navbar() {
               mr: 4,
               cursor: 'pointer',
             }}
-            onClick={() => handleNavClick('home')}
+            onClick={handleLogoClick}
           >
             <Box sx={{ position: 'relative', width: 80, height: 55 }}>
               <Image
@@ -236,8 +257,11 @@ export default function Navbar() {
                 <CloseIcon />
               </IconButton>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
-              <Box sx={{ position: 'relative', width: 200, height: 55 }}>
+            <Box 
+              sx={{ display: 'flex', justifyContent: 'center', my: 4 }}
+              onClick={handleLogoClick}
+            >
+              <Box sx={{ position: 'relative', width: 200, height: 55, cursor: 'pointer' }}>
                 <Image
                   src="/logo.png"
                   alt="Stéphanie Riccini Logo"

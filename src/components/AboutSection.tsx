@@ -4,7 +4,8 @@ import { Box, Typography, Container, Grid, Paper } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
 import { useInView } from 'react-intersection-observer';
-// import Image from 'next/image';
+import Image from 'next/image';
+import mockImage from '../../public/mock.png';
 
 export default function AboutSection() {
   const theme = useTheme();
@@ -84,111 +85,93 @@ export default function AboutSection() {
             À propos
           </Typography>
 
-          <Grid container spacing={8} alignItems="flex-start">
+          <Grid container spacing={8} alignItems="stretch">
             <Grid item xs={12} md={5}>
               <motion.div
                 variants={fadeInVariant}
                 transition={{ delay: 0.2 }}
+                style={{ height: '100%' }}
               >
                 {/* Elegant portrait with decorative elements */}
-                <Box sx={{ position: 'relative', height: '100%', minHeight: 600 }}>
+                <Box sx={{ position: 'relative', height: '100%' }}>
                   {/* Main portrait frame */}
                   <Paper
                     elevation={3}
                     sx={{
                       position: 'relative',
                       width: '100%',
-                      height: '85%',
-                      borderRadius: 2,
+                      height: 'calc(100% - 80px)',
                       overflow: 'hidden',
-                      zIndex: 2,
-                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
-                      border: `8px solid white`,
+                      borderRadius: 2,
+                      border: '8px solid white',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
                     }}
                   >
-                    <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
-                      {/* Replace with actual image */}
-                      <Box
-                        sx={{
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: theme.palette.primary.main,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <Typography variant="h6" color="white" sx={{ zIndex: 2, textAlign: 'center', px: 2 }}>
-                          Portrait de Stéphanie Riccini
-                        </Typography>
-                      </Box>
-                      {/* Uncomment when you have the actual image */}
-                      {/* <Image
-                        src="/stephanie-portrait.jpg"
-                        alt="Stéphanie Riccini - Conseillère en Gestion de Patrimoine"
-                        fill
-                        style={{ objectFit: 'cover' }}
-                        priority
-                      /> */}
-                    </Box>
+                    {/* UPDATED: Use the imported image directly */}
+                    <Image
+                      src={mockImage}
+                      alt="Stéphanie Riccini"
+                      style={{ 
+                        objectFit: 'cover',
+                        width: '100%',
+                        height: '100%',
+                        objectPosition: 'center top'
+                      }}
+                      priority
+                    />
                   </Paper>
                   
-                  {/* Decorative element - top left */}
+                  {/* Decorative circle */}
                   <Box
                     sx={{
                       position: 'absolute',
                       top: -20,
                       left: -20,
-                      width: '100px',
-                      height: '100px',
+                      width: 80,
+                      height: 80,
                       borderRadius: '50%',
                       backgroundColor: theme.palette.primary.light,
-                      opacity: 0.2,
-                      zIndex: 1,
+                      opacity: 0.7,
+                      zIndex: -1,
                     }}
                   />
                   
-                  {/* Decorative element - bottom right */}
+                  {/* Decorative circle */}
                   <Box
                     sx={{
                       position: 'absolute',
                       bottom: 40,
-                      right: -30,
-                      width: '120px',
-                      height: '120px',
+                      right: -20,
+                      width: 100,
+                      height: 100,
                       borderRadius: '50%',
                       backgroundColor: theme.palette.primary.light,
-                      opacity: 0.2,
-                      zIndex: 1,
+                      opacity: 0.5,
+                      zIndex: -1,
                     }}
                   />
                   
-                  {/* Decorative quote */}
+                  {/* Quote card */}
                   <Paper
                     elevation={2}
                     sx={{
                       position: 'absolute',
                       bottom: 0,
-                      left: '50%',
-                      transform: 'translateX(-50%)',
+                      right: 20,
                       width: '80%',
-                      py: 2,
-                      px: 3,
-                      borderRadius: 2,
+                      padding: 3,
                       backgroundColor: 'white',
-                      zIndex: 3,
-                      textAlign: 'center',
+                      borderRadius: 2,
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
                     }}
                   >
                     <Typography
-                      variant="body2"
+                      variant="body1"
                       sx={{
                         fontStyle: 'italic',
+                        textAlign: 'center',
                         color: theme.palette.text.secondary,
-                        fontSize: '0.9rem',
+                        fontFamily: 'var(--font-roboto-serif)',
                       }}
                     >
                       &quot;Chaque patrimoine raconte une histoire unique.&quot;
@@ -202,6 +185,7 @@ export default function AboutSection() {
               <motion.div
                 variants={fadeInVariant}
                 transition={{ delay: 0.4 }}
+                style={{ height: '100%' }}
               >
                 <Typography
                   variant="body1"
