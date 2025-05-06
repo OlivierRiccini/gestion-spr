@@ -32,9 +32,9 @@ export default function Footer() {
             <Typography variant="body2" sx={{ mb: 2 }}>
               Conseillère en Gestion de Patrimoine
             </Typography>
-            <Typography variant="body2">
+            {/* <Typography variant="body2">
               ORIAS n° XXXXXXXX
-            </Typography>
+            </Typography> */}
           </Grid>
 
           <Grid item xs={12} md={4}>
@@ -68,14 +68,14 @@ export default function Footer() {
             >
               Liens utiles
             </Typography>
-            <Link
+            {/* <Link
               href="#"
               color="inherit"
               underline="hover"
               sx={{ display: 'block', mb: 1 }}
             >
               Mentions légales
-            </Link>
+            </Link> */}
             <NextLink href="/politique-de-confidentialite" passHref>
               <Link
                 color="inherit"

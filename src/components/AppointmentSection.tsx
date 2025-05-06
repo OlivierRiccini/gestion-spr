@@ -1,41 +1,11 @@
 'use client';
 
-import { Box, Typography, Container, Grid, Button } from '@mui/material';
+import { Box, Typography, Container, Button, Paper } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
 import { useInView } from 'react-intersection-observer';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import EuroIcon from '@mui/icons-material/Euro';
 import Image from 'next/image';
-
-// Appointment types with their details
-const appointmentTypes = [
-  {
-    title: 'Première rencontre d\'information gratuite',
-    duration: '30 minutes',
-    price: 'Gratuite',
-    description: 'Un premier échange pour comprendre vos besoins et objectifs',
-    calendlyUrl: 'https://calendly.com/your-calendly/premiere-rencontre',
-    image: '/image-6.png',
-  },
-  {
-    title: 'Audit patrimonial',
-    duration: '1 heure 30 minutes',
-    price: '',
-    description: 'Analyse complète de votre situation financière et patrimoniale',
-    calendlyUrl: 'https://calendly.com/your-calendly/audit-patrimonial',
-    image: '/image-1.png',
-  },
-  {
-    title: 'Suivi annuel',
-    duration: '1 heure 30 minutes',
-    price: '150,00 €',
-    description: 'Bilan et ajustement de votre stratégie patrimoniale',
-    calendlyUrl: 'https://calendly.com/your-calendly/suivi-annuel',
-    image: '/image-7.png',
-  },
-];
 
 export default function AppointmentSection() {
   const theme = useTheme();
@@ -134,132 +104,93 @@ export default function AppointmentSection() {
             Prenez rendez-vous dès maintenant pour bénéficier d&apos;un conseil personnalisé, en toute confidentialité.
           </Typography>
 
-          <Box 
-            sx={{ 
-              backgroundColor: '#ffffff',
-              borderRadius: 2,
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
-              overflow: 'hidden',
-            }}
+          <motion.div
+            variants={fadeInVariant}
+            transition={{ delay: 0.2 }}
           >
-            {appointmentTypes.map((appointment, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInVariant}
-                transition={{ delay: 0.2 + (index * 0.1) }}
+            <Paper
+              elevation={0}
+              sx={{
+                p: { xs: 4, md: 6 },
+                borderRadius: 2,
+                backgroundColor: '#ffffff',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
+                textAlign: 'center',
+                maxWidth: '800px',
+                mx: 'auto',
+              }}
+            >
+              <Box
+                sx={{
+                  position: 'relative',
+                  height: '120px',
+                  width: '120px',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  mx: 'auto',
+                  mb: 4,
+                  border: `4px solid ${theme.palette.primary.light}`,
+                }}
               >
-                <Box
-                  sx={{
-                    p: { xs: 3, md: 5 },
-                    borderBottom: index !== appointmentTypes.length - 1 ? '1px solid rgba(0, 0, 0, 0.06)' : 'none',
-                    transition: 'background-color 0.3s ease',
-                    '&:hover': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.01)',
-                    },
+                <Image
+                  src="/image-1.png"
+                  alt="Rencontre découverte"
+                  fill
+                  style={{ 
+                    objectFit: 'cover',
+                    objectPosition: 'center',
                   }}
-                >
-                  <Grid container spacing={3} alignItems="center">
-                    <Grid item xs={12} md={2}>
-                      <Box
-                        sx={{
-                          position: 'relative',
-                          height: '80px',
-                          width: '80px',
-                          borderRadius: '50%',
-                          overflow: 'hidden',
-                          mx: { xs: 'auto', md: 0 },
-                          mb: { xs: 2, md: 0 },
-                        }}
-                      >
-                        <Image
-                          src={appointment.image}
-                          alt={appointment.title}
-                          fill
-                          style={{ 
-                            objectFit: 'cover',
-                            objectPosition: 'center',
-                          }}
-                        />
-                      </Box>
-                    </Grid>
-                    
-                    <Grid item xs={12} md={5}>
-                      <Typography
-                        variant="h5"
-                        component="h3"
-                        sx={{
-                          mb: 1,
-                          fontWeight: 500,
-                          color: theme.palette.text.primary,
-                          textAlign: { xs: 'center', md: 'left' },
-                        }}
-                      >
-                        {appointment.title}
-                      </Typography>
-                      
-                      <Box sx={{ 
-                        display: 'flex', 
-                        flexWrap: 'wrap', 
-                        gap: 3, 
-                        mb: 2,
-                        justifyContent: { xs: 'center', md: 'flex-start' },
-                      }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                          <AccessTimeIcon sx={{ mr: 1, color: theme.palette.primary.main, fontSize: '1.2rem' }} />
-                          <Typography variant="body2" color="text.secondary">
-                            {appointment.duration}
-                          </Typography>
-                        </Box>
-                        
-                        {appointment.price && (
-                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <EuroIcon sx={{ mr: 1, color: theme.palette.primary.main, fontSize: '1.2rem' }} />
-                            <Typography variant="body2" color="text.secondary">
-                              {appointment.price}
-                            </Typography>
-                          </Box>
-                        )}
-                      </Box>
-                      
-                      <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        sx={{ 
-                          lineHeight: 1.7,
-                          textAlign: { xs: 'center', md: 'left' },
-                        }}
-                      >
-                        {appointment.description}
-                      </Typography>
-                    </Grid>
-                    
-                    <Grid item xs={12} md={5} sx={{ textAlign: { xs: 'center', md: 'right' } }}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<CalendarMonthIcon />}
-                        component="a"
-                        href={appointment.calendlyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        sx={{
-                          px: 4,
-                          py: 1.5,
-                          backgroundColor: '#0f0f0f',
-                          color: '#ffffff',
-                          '&:hover': {
-                            backgroundColor: '#000000',
-                          },
-                        }}
-                      >
-                        PROGRAMMER
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </motion.div>
-            ))}
-          </Box>
+                />
+              </Box>
+              
+              <Typography
+                variant="h4"
+                component="h3"
+                sx={{
+                  mb: 4,
+                  fontWeight: 500,
+                  color: theme.palette.text.primary,
+                }}
+              >
+                Rencontre Découverte
+              </Typography>
+              
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                sx={{ 
+                  lineHeight: 1.7,
+                  mb: 4,
+                  maxWidth: '600px',
+                  mx: 'auto',
+                }}
+              >
+                Un premier échange pour comprendre vos objectifs, évaluer votre situation patrimoniale actuelle et identifier les opportunités d'optimisation. Cette rencontre sans engagement vous permettra de découvrir comment nous pouvons vous accompagner dans la réalisation de vos projets.
+              </Typography>
+              
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                startIcon={<CalendarMonthIcon />}
+                component="a"
+                href="https://calendly.com/pelletierste/bilan-patrimonial"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  backgroundColor: '#0f0f0f',
+                  color: '#ffffff',
+                  '&:hover': {
+                    backgroundColor: '#000000',
+                  },
+                }}
+              >
+                RÉSERVER UN RENDEZ-VOUS
+              </Button>
+            </Paper>
+          </motion.div>
         </motion.div>
       </Container>
       
