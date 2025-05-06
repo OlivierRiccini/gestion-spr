@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import { useInView } from 'react-intersection-observer';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Image from 'next/image';
+import { EMAIL_ASSETS } from './emails/constants';
 
 export default function AppointmentSection() {
   const theme = useTheme();
@@ -174,7 +175,7 @@ export default function AppointmentSection() {
                 size="large"
                 startIcon={<CalendarMonthIcon />}
                 component="a"
-                href="https://calendly.com/pelletierste/bilan-patrimonial"
+                href={EMAIL_ASSETS.CALENDLY_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
