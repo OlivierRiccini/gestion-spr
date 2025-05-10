@@ -166,7 +166,7 @@ export default function PrivacyPolicy() {
                 3. Données collectées
               </Typography>
               <Typography paragraph>
-                Nous collectons uniquement les données personnelles nécessaires pour répondre à vos demandes ou améliorer nos services :
+                Nous collectons uniquement les données personnelles nécessaires pour répondre à vos demandes ou améliorer Nos services :
               </Typography>
               <Box component="ul" sx={{ pl: 4 }}>
                 <Typography component="li" paragraph>Nom et prénom</Typography>

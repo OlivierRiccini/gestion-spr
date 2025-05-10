@@ -35,11 +35,11 @@ export default function Home() {
       "https://twitter.com/stephaniericcini"
     ],
     "serviceType": [
-      "Bilan Patrimonial",
-      "Optimisation Fiscale",
-      "Préparation de la Retraite",
-      "Transmission Anticipée",
-      "Protection du Conjoint"
+      "Bilan patrimonial",
+      "Optimisation fiscale",
+      "Préparation de la retraite",
+      "Transmission anticipée",
+      "Protection du conjoint"
     ]
   };
 

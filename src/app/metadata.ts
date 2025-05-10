@@ -1,7 +1,7 @@
 export const defaultMetadata = {
   title: 'Stéphanie Riccini | Conseil en Gestion de Patrimoine',
   description: 'Conseils personnalisés en gestion de patrimoine pour sécuriser votre avenir financier et réaliser vos projets. Optimisation fiscale, préparation retraite et transmission de patrimoine.',
-  keywords: 'gestion de patrimoine, conseil financier, optimisation fiscale, préparation retraite, transmission patrimoine, protection conjoint, bilan patrimonial',
+  keywords: 'gestion de patrimoine, conseil financier, Optimisation fiscale, préparation retraite, transmission patrimoine, protection conjoint, Bilan patrimonial',
   authors: [{ name: 'Stéphanie Riccini' }],
   creator: 'Stéphanie Riccini',
   publisher: 'Stéphanie Riccini',

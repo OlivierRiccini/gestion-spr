@@ -11,10 +11,10 @@ import Image from 'next/image';
 
 const services = [
   {
-    title: 'Bilan Patrimonial',
+    title: 'Bilan patrimonial',
     subtitle: 'Sur devis',
     shortDescription: 'Diagnostic complet et confidentiel de votre situation financière, juridique et fiscale.',
-    fullDescription: `Le bilan patrimonial, aussi appelé audit patrimonial, est la première étape essentielle pour toute stratégie de gestion de patrimoine. Il s'agit d'un diagnostic complet et personnalisé de votre situation financière, juridique et fiscale, réalisé en toute confidentialité.
+    fullDescription: `Le Bilan patrimonial, aussi appelé audit patrimonial, est la première étape essentielle pour toute stratégie de gestion de patrimoine. Il s'agit d'un diagnostic complet et personnalisé de votre situation financière, juridique et fiscale, réalisé en toute confidentialité.
 
 Notre objectif : vous aider à prendre les meilleures décisions pour protéger, valoriser et transmettre votre patrimoine en toute sérénité.`,
     image: '/image-1.png',
@@ -22,18 +22,18 @@ Notre objectif : vous aider à prendre les meilleures décisions pour protéger,
     alt: 'Bilan patrimonial personnalisé'
   },
   {
-    title: 'Optimisation Fiscale',
+    title: 'Optimisation fiscale',
     subtitle: '',
     shortDescription: "Réduction d'impôt légale grâce à une organisation intelligente.",
-    fullDescription: `L'optimisation fiscale consiste à organiser intelligemment votre patrimoine ou vos revenus pour réduire votre imposition, dans le respect strict du cadre légal. Ce n'est pas échapper à l'impôt, mais payer l'impôt juste, en utilisant les dispositifs et régimes prévus par la loi.
+    fullDescription: `L'Optimisation fiscale consiste à organiser intelligemment votre patrimoine ou vos revenus pour réduire votre imposition, dans le respect strict du cadre légal. Ce n'est pas échapper à l'impôt, mais payer l'impôt juste, en utilisant les dispositifs et régimes prévus par la loi.
 
 Notre rôle : vous accompagner pour mieux comprendre votre fiscalité, identifier les leviers d'optimisation et mettre en place des solutions adaptées à votre situation.`,
     image: '/image-2.png',
     color: '#c8b7a6',
-    alt: 'Stratégies d\'optimisation fiscale légale'
+    alt: 'Stratégies d\'Optimisation fiscale légale'
   },
   {
-    title: 'Préparation de la Retraite',
+    title: 'Préparation de la retraite',
     subtitle: '',
     shortDescription: 'Anticiper la retraite avec une stratégie personnalisée.',
     fullDescription: `Préparer sa retraite ne s'improvise pas. Que vous soyez salarié, indépendant ou chef d'entreprise, il est essentiel d'anticiper cette transition pour maintenir votre niveau de vie et protéger vos proches. La retraite se prépare plusieurs années à l'avance, et chaque choix compte.
@@ -44,7 +44,7 @@ Notre mission : vous aider à construire une stratégie de retraite sur-mesure, 
     alt: 'Préparation personnalisée pour la retraite'
   },
   {
-    title: 'Transmission Anticipée',
+    title: 'Transmission anticipée',
     subtitle: '',
     shortDescription: 'Organiser la transmission de votre vivant pour optimiser les droits.',
     fullDescription: `Transmettre son patrimoine ne se limite pas à la succession. Anticiper cette transmission de son vivant permet de protéger ses proches, de réduire les droits de succession et de transmettre dans les meilleures conditions possibles.
@@ -55,7 +55,7 @@ Que ce soit dans un cadre familial ou professionnel, il est essentiel d'établir
     alt: 'Stratégies de transmission anticipée de patrimoine'
   },
   {
-    title: 'Protection du Conjoint',
+    title: 'Protection du conjoint',
     subtitle: '',
     shortDescription: "Sécuriser l'avenir du conjoint survivant en cas de décès.",
     fullDescription: `En cas de décès, le conjoint survivant peut se retrouver dans une situation financière délicate, surtout en présence d'enfants ou en l'absence de dispositions adaptées. Anticiper la protection du conjoint est une démarche essentielle pour garantir sa sécurité matérielle, son cadre de vie et le respect de vos volontés.
@@ -180,7 +180,7 @@ export default function ServicesSection() {
               color: theme.palette.text.primary,
             }}
           >
-            Nos Services
+            Nos services
           </Typography>
           
           <Typography

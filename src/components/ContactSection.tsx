@@ -167,7 +167,7 @@ export default function ContactSection() {
                     color: theme.palette.text.secondary,
                   }}
                 >
-                  Vous avez des questions ou souhaitez prendre rendez-vous ? N&apos;hésitez pas à me contacter par téléphone, email ou via le formulaire ci-contre.
+                  Si vous avez des questions n&apos;hésitez pas à me contacter par téléphone, email ou via le formulaire ci-contre.
                 </Typography>
                 
                 <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>

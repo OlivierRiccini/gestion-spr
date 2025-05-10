@@ -152,7 +152,7 @@ export default function AboutSection() {
                   />
                   
                   {/* Quote card */}
-                  <Paper
+                  {/* <Paper
                     elevation={2}
                     sx={{
                       position: 'absolute',
@@ -176,7 +176,7 @@ export default function AboutSection() {
                     >
                       &quot;Chaque patrimoine raconte une histoire unique.&quot;
                     </Typography>
-                  </Paper>
+                  </Paper> */}
                 </Box>
               </motion.div>
             </Grid>
